@@ -1,0 +1,1 @@
+export { extractVideoInformation } from "./extractVideoInformation";
