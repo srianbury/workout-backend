@@ -2,6 +2,7 @@ import { getPosts } from "./getPosts";
 import { getPostByPostId } from "./getPostByPostId";
 import { getPostCreator } from "./getPostCreator";
 import { createPost } from "./createPost";
+import { updatePost } from "./updatePost";
 import { deletePost } from "./deletePost";
 import { getPostsByUsername } from "./getPostsByUsername";
 
@@ -13,6 +14,7 @@ const postResolver = {
   },
   Mutation: {
     createPost,
+    updatePost,
     deletePost,
   },
   Post: {
