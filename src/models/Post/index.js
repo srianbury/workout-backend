@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema(
     title: String,
     shortDescription: String,
     longDescription: String,
+    videoSource: String,
     media: {
       video: {
         source: String,

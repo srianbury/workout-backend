@@ -15,7 +15,15 @@ const postSchema = gql`
       longDescription: String!
       videoSource: String
     ): Post
-    deletePost(postId: ID!): Boolean!
+    updatePost(
+      token: String!
+      postId: ID!
+      title: String
+      shortDescription: String
+      longDescription: String
+      videoSource: String
+    ): Post!
+    deletePost(token: String!, postId: ID!): Boolean
   }
 
   type Post {
@@ -23,6 +31,7 @@ const postSchema = gql`
     title: String!
     shortDescription: String!
     longDescription: String!
+    videoSource: String
     createdAt: DateTime!
     media: PostMedia
     user: User!
@@ -34,8 +43,8 @@ const postSchema = gql`
   }
 
   type PostMediaVideo {
-    source: String!
-    id: String!
+    source: String
+    id: String
   }
 `;
 
