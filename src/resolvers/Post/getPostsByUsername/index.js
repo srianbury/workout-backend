@@ -4,9 +4,13 @@ async function getPostsByUsername(parent, { username }, { models }, info) {
     return null;
   }
 
-  const posts = await models.models.Post.find({
-    userId: user.userId,
-  }).exec();
+  const posts = await models.models.Post.find(
+    {
+      userId: user.userId,
+    },
+    null,
+    { sort: { createdAt: -1 } }
+  ).exec();
   return posts;
 }
 
