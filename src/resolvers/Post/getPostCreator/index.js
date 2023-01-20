@@ -1,5 +1,5 @@
-async function getPostCreator(post, args, { models }, info) {
-  return await models.models.User.findOne({ userId: post.userId }).exec();
+async function getPostCreator(post, args, { models, loaders }, info) {
+  return await loaders.creators.load(post.userId);
 }
 
 export { getPostCreator };
