@@ -24,6 +24,7 @@ const postSchema = gql`
       videoSource: String
     ): Post!
     deletePost(token: String!, postId: ID!): Boolean
+    favoritePost(postId: ID!, operation: String!): Boolean!
   }
 
   type Post {
@@ -35,6 +36,8 @@ const postSchema = gql`
     createdAt: DateTime!
     media: PostMedia
     user: User!
+    favorites: Int!
+    favorited: Boolean!
   }
 
   type PostMedia {

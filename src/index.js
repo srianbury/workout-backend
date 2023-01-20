@@ -4,10 +4,17 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { initializeApp } from "firebase-admin/app";
 import mongoose from "mongoose";
+import admin from "firebase-admin";
+import DataLoader from "dataloader";
 import { schema } from "./schemas";
 import { resolvers } from "./resolvers";
 import * as models from "./models";
-import admin from "firebase-admin";
+import { getRequestor } from "./context";
+import {
+  getPostsFavoritedByRequestor,
+  getPostsFavoritesCount,
+  getUsers,
+} from "./loaders";
 
 function getFirebassApp() {
   if (admin.apps.length === 0) {
@@ -25,9 +32,24 @@ app.use(cors());
 const apolloServer = new ApolloServer({
   typeDefs: schema,
   resolvers,
-  context: {
-    models,
-    firebaseApp: getFirebassApp(),
+  context: async ({ req }) => {
+    const firebaseApp = getFirebassApp();
+    const requestor = await getRequestor(req, firebaseApp, models);
+
+    return {
+      models,
+      firebaseApp,
+      requestor,
+      loaders: {
+        postsFavoritedByRequestor: new DataLoader((keys) =>
+          getPostsFavoritedByRequestor(keys, models, requestor)
+        ),
+        postsFavoritesCounts: new DataLoader((keys) =>
+          getPostsFavoritesCount(keys, models)
+        ),
+        creators: new DataLoader((userIds) => getUsers(userIds, models)),
+      },
+    };
   },
 });
 
