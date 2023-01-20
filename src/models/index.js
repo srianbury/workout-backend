@@ -1,5 +1,7 @@
 import { User } from "./User";
 import { Post } from "./Post";
+import { UserFavorites } from "./UserFavorites";
+import { PostFavoritedBy } from "./PostFavoritedBy";
 
 let mockUsers = [
   {
@@ -84,6 +86,8 @@ let mockUsersDict = getMockUsersDict();
 const models = {
   User,
   Post,
+  UserFavorites,
+  PostFavoritedBy,
 };
 
 export { mockUsers, mockPosts, mockUsersDict, models };
