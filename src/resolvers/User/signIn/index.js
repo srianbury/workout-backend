@@ -2,30 +2,21 @@ import { getAuth } from "firebase-admin/auth";
 
 async function signIn(parent, { token }, { models, firebaseApp }, info) {
   try {
+    // TODO: change this to use requestor context instead of the token arg
     const auth = await getAuth(firebaseApp).verifyIdToken(token);
     const user = await models.models.User.findOne({ userId: auth.uid }).exec();
 
     if (!user) {
-      return {
-        authenticationError: {
-          type: "ACCOUNT_NOT_FOUND",
-          message: "Account not found.",
-        },
-      };
+      throw new Error("ACCOUNT_NOT_FOUND");
     }
 
     return {
-      user: {
-        ...user["_doc"],
-        token,
-      },
+      ...user._doc,
+      token,
     };
   } catch (e) {
-    return {
-      authenticationError: {
-        message: "An unexpected error occurred.",
-      },
-    };
+    console.log(e);
+    throw e;
   }
 }
 
