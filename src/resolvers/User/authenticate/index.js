@@ -15,11 +15,8 @@ async function authenticate(parent, args, context, info) {
         );
     }
   } catch (e) {
-    return {
-      authenticationError: {
-        message: "An unexpected error occurred.",
-      },
-    };
+    console.log(e);
+    throw e;
   }
 }
 
