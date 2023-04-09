@@ -25,10 +25,8 @@ async function signUp(parent, { token }, { models, firebaseApp }, info) {
     await newUser.save();
 
     return {
-      user: {
-        ...newUser["_doc"],
-        token,
-      },
+      ...newUser._doc,
+      token,
     };
   } catch (e) {
     return {
