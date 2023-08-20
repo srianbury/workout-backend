@@ -46,7 +46,7 @@ async function likePost(parent, { postId }, { models, requestor }, info) {
   await models.models.UserFavorites.findOneAndUpdate(
     { userId: requestor._id },
     {
-      $set: { [`favorites.${postId}`]: {} },
+      $set: { favorites: { [postId]: {} } },
     },
     { upsert: true }
   );

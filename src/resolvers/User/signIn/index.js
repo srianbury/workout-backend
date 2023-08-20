@@ -10,10 +10,12 @@ async function signIn(parent, { token }, { models, firebaseApp }, info) {
       throw new Error("ACCOUNT_NOT_FOUND");
     }
 
-    return {
+    const result = {
       ...user._doc,
       token,
     };
+
+    return result;
   } catch (e) {
     console.log(e);
     throw e;
