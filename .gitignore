@@ -2,3 +2,5 @@
 node_modules/
 build/
 src/config/
+
+local-db-data/

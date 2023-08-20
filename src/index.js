@@ -57,7 +57,8 @@ async function startServer() {
   await apolloServer.start();
   apolloServer.applyMiddleware({ app, path: "/graphql" });
   await mongoose.connect(
-    `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_HOST}/?retryWrites=true&w=majority`,
+    process.env.MONGO_DB_DOCKER_CONNECTION_STRING ||
+      `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_HOST}/?retryWrites=true&w=majority`,
     {
       dbName: process.env.MONGO_DB_DATABASE_NAME,
     }
