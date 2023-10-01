@@ -43,13 +43,29 @@ async function likePost(parent, { postId }, { models, requestor }, info) {
   }
 
   // Update the list of posts liked by the user
-  await models.models.UserFavorites.findOneAndUpdate(
-    { userId: requestor._id },
-    {
-      $set: { favorites: { [postId]: {} } },
-    },
-    { upsert: true }
-  );
+  const userIdFilter = { userId: requestor._id };
+  const userFavorites = await models.models.UserFavorites.findOne(userIdFilter);
+  if (!userFavorites) {
+    const newUserFavorites = models.models.UserFavorites({
+      userId: requestor._id,
+      favorites: {
+        [postId]: {},
+      },
+    });
+    await newUserFavorites.save();
+  } else {
+    if (!userFavorites.favorites.has(postId)) {
+      const update = {
+        $set: { [`favorites.${postId}`]: {} },
+      };
+      const options = { upsert: true };
+      await models.models.UserFavorites.findOneAndUpdate(
+        userIdFilter,
+        update,
+        options
+      );
+    }
+  }
 
   return true;
 }
