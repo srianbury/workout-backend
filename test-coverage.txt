@@ -1,0 +1,106 @@
+# Test Coverage
+
+## TODO
+1. Update User.authenticate Mutation to return the type below instead.  This will require changes on the FE TODO
+Test for
+[ ] email/username+Password
+[ ] Google login
+[ ] Facebook login
+type AuthenticatedUser {
+    userId: ID!
+    email: String!
+    initials: String!
+    username: String!
+    picture: String
+    token: String!
+}
+
+## Manual test coverage for now
+
+### User
+[ ] getUserByUsername
+    [ ] Username null/undefined
+    [ ] No user found for given username
+    [ ] User found for given username 
+
+[ ] authenticate
+    [ ] signUp
+        [ ] No token (firebase token) given
+        [ ] User doesn't already exist (based on firebase uid)
+        [ ] Successful Sign Up
+            [ ] Email + Password
+            [ ] Facebook
+            [ ] Google
+
+    [ ] signIn
+        [ ] No token given
+        [ ] User doesn't already exist (based on firebase uid)
+        [ ] Successful Sign Up
+            [ ] Email + Password
+            [ ] Facebook
+            [ ] Google
+
+[ ] updateUserInfo
+    [ ] No requestor found  # TODO: update this function to add/use the requestor context
+    [ ] Successfully Update username
+
+### Post
+[ ] getPosts # TODO: Paginate this result
+
+[ ] getPostByPostId
+    [ ] postId is null/undefined
+    [ ] No post found for postId
+    [ ] Successfully return the post
+
+[ ] getPostsByUsername # TODO: update this to use the requestor context
+    [ ] Requestor is null/undefined
+    [ ] User has no posts
+    [ ] User has posts
+
+[ ] createPost # TODO: update this to use the requestor context
+    [ ] Requestor is null/undefined
+    [ ] Error creating post
+    [ ] Successfully create post
+
+[ ] updatePost # TODO: update this to use the requestor context
+    [ ] Requestor is null/undefined
+    [ ] Post doesn't exist
+    [ ] Error updating post
+    [ ] Successfully update post
+
+[ ] deletePost # TODO: update this to use the requestor context
+    [ ] Requestor is null/undefined
+    [ ] Post doesn't exist
+    [ ] Error deleting post
+    [ ] Successfully delete post
+
+[ ] favoritePost
+    [ ] Like
+        [ ] requestor is null/undefined
+        [ ] postFavoritedBy is null
+        [ ] postFavoritedBy is not null
+            [ ] User has already liked the post (do nothing)
+                [ ] No like count increase
+                [ ] User key not added twice
+                [ ] Post not added to the user's list of favorites twice
+            [ ] User has not already liked the post
+                [ ] Count increases by one
+                [ ] userId added to list of post's favoriters
+
+    [ ] Unlike
+        [ ] requestor is null/undefined
+        [ ] requestor has liked the post
+            [ ] like count decrease by one
+            [ ] user removed from list of favoriters
+            [ ] post removed from users favorites
+        [ ] requestor has not liked the post
+            [ ] do nothing
+
+[ ] favorites: Get the post's favorite count
+    [ ] No favorites object for the post
+    [ ] Post have a favorites object + Successfully return the correct number of favorites
+
+[ ] favorited: Check if the requestor favorited the post
+    [ ] No requestor
+    [ ] Requestor liked the post
+    [ ] Requestor didn't like the post
