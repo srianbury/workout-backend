@@ -1,0 +1,31 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo:5.0.15
+    container_name: workout-app-local-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - workout-app-local-mongodb-data:/data/db
+    environment:
+      MONGO_DB_USERNAME: ${MONGO_DB_USERNAME}
+      MONGO_DB_PASSWORD: ${MONGO_DB_PASSWORD}
+
+  mongo-express:
+    image: mongo-express
+    container_name: workout-app-local-mongodb-admin-web-tool
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_DB_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_DB_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: ${MONGO_DB_HOST}
+      ME_CONFIG_MONGODB_URL: ${MONGO_DB_PROTOCOL_SCHEME}://${ME_CONFIG_MONGODB_ADMINUSERNAME}:${ME_CONFIG_MONGODB_ADMINPASSWORD}@${ME_CONFIG_MONGODB_SERVER}/
+
+volumes:
+  workout-app-local-mongodb-data:
+    name: "workout-app-local-mongodb-volume"

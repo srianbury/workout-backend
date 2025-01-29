@@ -3,6 +3,7 @@ import { gql } from "apollo-server-express";
 const userSchema = gql`
   extend type Query {
     getUserByUsername(username: String!): User
+    getMyFavorites: [FavoritedPost!]!
   }
 
   extend type Mutation {
@@ -39,6 +40,11 @@ const userSchema = gql`
 
   type UpdateUserResponse {
     accessToken: String
+  }
+
+  type FavoritedPost {
+    favoritedAt: DateTime!
+    post: Post!
   }
 `;
 

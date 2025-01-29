@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  workoutapp-backend:
+    container_name: workout-app-backend-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    # volumes:
+    #   - ./src:/usr/src/app/src
+    # networks:
+    #   - backend
+    #   - frontend
+
+# networks:
+#   backend:
+#     name: workoutapp-backend-network
+#     external: true
+#   frontend:
+#     name: workoutapp-frontend-network
