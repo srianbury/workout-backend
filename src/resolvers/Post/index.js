@@ -5,7 +5,6 @@ import { createPost } from "./createPost";
 import { updatePost } from "./updatePost";
 import { deletePost } from "./deletePost";
 import { getPostsByUsername } from "./getPostsByUsername";
-import { getPostsFavoritesCount } from "./getPostsFavoritesCount";
 import { favoritePost } from "./favoritePost";
 import { getFavorited } from "./getFavorited";
 
@@ -26,7 +25,10 @@ const postResolver = {
     postId: (post) => {
       return post.postId || post._id.toString();
     },
-    favorites: getPostsFavoritesCount,
+    favorites: (post) => {
+      const numFavorites = post.likeCount;
+      return numFavorites == null ? 0 : numFavorites;
+    },
     favorited: getFavorited,
   },
 };

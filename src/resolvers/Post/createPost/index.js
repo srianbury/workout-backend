@@ -12,8 +12,8 @@ async function createPost(parent, args, { models, firebaseApp }, info) {
       // TODO: FINISH
       return {
         authenticationError: {
-          type: "ACCOUNT_ALREADY_EXISTS_PLEASE_SIGN_IN",
-          message: "An account was already found.  Please sign in.",
+          type: "NOT_LOGGED_IN_EXCEPTION",
+          message: "Please sign in to create a post.",
         },
       };
     }
