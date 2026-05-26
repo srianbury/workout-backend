@@ -1,29 +1,29 @@
 /*
     Check to see if a given post is liked by a given user
 */
+
+import mongoose from "mongoose";
+
 async function getFavorited(
   { _id: postId, userId },
   args,
   { requestor, models, loaders },
-  info
+  info,
 ) {
   try {
-    if (!requestor || !requestor.userId) {
+    if (!requestor) {
       return false;
     }
-    const requestorsFavorites = await loaders.postsFavoritedByRequestor.load(
-      requestor.userId
-    );
-    if (!requestorsFavorites) {
-      return false;
-    }
+    console.log("getFavorited", postId, requestor._id);
+    const like = await models.models.Likes.findOne({
+      postId,
+      userId: requestor._id,
+    }).exec();
+    console.log("like", like);
 
-    if (requestorsFavorites.has(postId.toString())) {
-      return true;
-    }
-
-    return false;
+    return like != null;
   } catch (e) {
+    console.log(e);
     return false;
   }
 }

@@ -10,11 +10,7 @@ import { schema } from "./schemas";
 import { resolvers } from "./resolvers";
 import * as models from "./models";
 import { getRequestor } from "./context";
-import {
-  getPostsFavoritedByRequestor,
-  getPostsFavoritesCount,
-  getUsers,
-} from "./loaders";
+import { getUsers } from "./loaders";
 
 function getFirebassApp() {
   if (admin.apps.length === 0) {
@@ -28,7 +24,6 @@ function getFirebassApp() {
 
 const app = express();
 app.use(cors());
-
 const apolloServer = new ApolloServer({
   typeDefs: schema,
   resolvers,
@@ -41,12 +36,6 @@ const apolloServer = new ApolloServer({
       firebaseApp,
       requestor,
       loaders: {
-        postsFavoritedByRequestor: new DataLoader((keys) =>
-          getPostsFavoritedByRequestor(keys, models, requestor)
-        ),
-        postsFavoritesCounts: new DataLoader((keys) =>
-          getPostsFavoritesCount(keys, models)
-        ),
         creators: new DataLoader((userIds) => getUsers(userIds, models)),
       },
     };
@@ -64,11 +53,11 @@ async function startServer() {
     }`,
     {
       dbName: process.env.MONGO_DB_DATABASE_NAME,
-    }
+    },
   );
   app.listen({ port: process.env.PORT }, () => {
     console.log(
-      `Apollo Server on http://localhost:${process.env.PORT}/graphql`
+      `Apollo Server on http://localhost:${process.env.PORT}/graphql`,
     );
   });
 }

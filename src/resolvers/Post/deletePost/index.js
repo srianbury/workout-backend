@@ -4,13 +4,13 @@ async function deletePost(
   parent,
   { token, postId },
   { models, firebaseApp },
-  info
+  info,
 ) {
   let auth;
   try {
     auth = await getAuth(firebaseApp).verifyIdToken(token);
   } catch (e) {
-    throw Error("Not authorized.");
+    throw Error("Error trying to authenticate.");
   }
   if (!auth) {
     throw Error("Not authorized.");
@@ -25,7 +25,7 @@ async function deletePost(
   try {
     post = await models.models.Post.findById(postId).exec();
   } catch (e) {
-    throw Error("Post not found.");
+    throw Error("Error finding post.");
   }
   if (!post) {
     throw Error("Post not found.");
@@ -36,6 +36,7 @@ async function deletePost(
   }
 
   await models.models.Post.deleteOne({ _id: post._id });
+  await models.models.Likes.deleteMany({ postId });
   return true;
 }
 
