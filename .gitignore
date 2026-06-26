@@ -4,3 +4,5 @@ build/
 src/config/
 
 local-db-data/
+
+TODO.md

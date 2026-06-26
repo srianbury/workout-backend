@@ -12,7 +12,7 @@ const userSchema = gql`
   }
 
   type User {
-    userId: ID!
+    id: ID!
     email: String!
     initials: String!
     username: String!
@@ -20,7 +20,7 @@ const userSchema = gql`
   }
 
   type AuthenticatedUser {
-    userId: ID!
+    id: ID!
     email: String!
     initials: String!
     username: String!

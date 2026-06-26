@@ -31,7 +31,7 @@ async function deletePost(
     throw Error("Post not found.");
   }
 
-  if (post.userId != auth.uid) {
+  if (!post.authorId.equals(user._id)) {
     throw Error("Not authorized.");
   }
 

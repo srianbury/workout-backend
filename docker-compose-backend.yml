@@ -7,7 +7,8 @@ services:
       context: .
       dockerfile: backend.Dockerfile
     ports:
-      - '8000:8000'
+      - "8000:8000"
+      - "9229:9229"
     volumes:
       - ./src:/usr/src/app/src
     # networks:

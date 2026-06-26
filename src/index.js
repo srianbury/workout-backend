@@ -36,7 +36,7 @@ const apolloServer = new ApolloServer({
       firebaseApp,
       requestor,
       loaders: {
-        creators: new DataLoader((userIds) => getUsers(userIds, models)),
+        creators: new DataLoader((ids) => getUsers(ids, models)),
       },
     };
   },

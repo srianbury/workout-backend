@@ -17,10 +17,14 @@ async function signUp(parent, { token }, { models, firebaseApp }, info) {
 
     const newUser = new models.models.User({
       userId: auth.uid,
-      username: auth.uid,
+      username: auth.uid, // temporary
       email: auth.email,
       picture: auth.picture,
     });
+
+    await newUser.save();
+
+    newUser.username = newUser._id.toString();
 
     await newUser.save();
 

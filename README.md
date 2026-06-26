@@ -12,6 +12,7 @@ backend service for [https://platphorm.vercel.app/](https://platphorm.vercel.app
 - In this tool, you can create, view, update, and delete the database(s) and collection(s)
 
 2. `docker compose -f docker-compose-backend.yml build && docker compose -f docker-compose-backend.yml up` to build and start the backend service
+   - To attach the debugger, after starting, run `Attach Backend Docker` via `Run and Debug in VS Code`
 
 - With this running, you can visit the backend service at `http://localhost:8000/graphql`
 

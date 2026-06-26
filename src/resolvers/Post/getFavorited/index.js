@@ -5,7 +5,7 @@
 import mongoose from "mongoose";
 
 async function getFavorited(
-  { _id: postId, userId },
+  { _id: postId },
   args,
   { requestor, models, loaders },
   info,
