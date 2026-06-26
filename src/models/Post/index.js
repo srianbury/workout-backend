@@ -2,22 +2,26 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
-    userId: String,
+    authorId: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     title: String,
     shortDescription: String,
     longDescription: String,
     videoSource: String,
-    likeCount: {
-      type: Number,
-      deafult: 0,
-      min: 0,
-    },
     media: {
       video: {
         source: String,
         id: String,
       },
       photo: String,
+    },
+    likeCount: {
+      type: Number,
+      deafult: 0,
+      min: 0,
     },
   },
   { timestamps: true },

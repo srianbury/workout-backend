@@ -1,14 +1,26 @@
-async function getUsers(userIds, models) {
+import mongoose from "mongoose";
+
+/**
+ * ids: [ObjectId]
+ */
+async function getUsers(ids, models) {
   const users = await models.models.User.find({
-    userId: { $in: userIds },
+    _id: { $in: ids },
   }).exec();
 
   let userMap = {};
   for (const user of users) {
-    userMap[user.userId] = user;
+    userMap[user._id.toString()] = user;
   }
 
-  return userIds.map((key) => userMap[key]);
+  return ids.map((id) => userMap[id.toString()]);
 }
+
+/**
+ * ids [ObjectId("6a14e2fcb142cdce1c94229a"),  ObjectId("697540fdfeb77739d3f5f302")]
+ * userMap = {
+ *   '6a14e2fcb142cdce1c94229a': {}
+ * }
+ */
 
 export { getUsers };

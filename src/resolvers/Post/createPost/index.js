@@ -25,7 +25,7 @@ async function createPost(parent, args, { models, firebaseApp }, info) {
     }
 
     const newPost = new models.models.Post({
-      userId: auth.uid,
+      authorId: user._id,
       title,
       shortDescription,
       longDescription,
@@ -40,6 +40,7 @@ async function createPost(parent, args, { models, firebaseApp }, info) {
     };
     return result;
   } catch (e) {
+    console.log(e);
     return null;
   }
 }

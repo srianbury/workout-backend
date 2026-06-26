@@ -14,9 +14,11 @@ const userResolver = {
     updateUserInfo,
   },
   User: {
+    id: (user) => user._id.toString(),
     initials: getUsersInitials,
   },
   AuthenticatedUser: {
+    id: (user) => user._id.toString(),
     initials: getUsersInitials,
   },
 };

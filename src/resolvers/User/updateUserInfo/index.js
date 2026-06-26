@@ -4,7 +4,7 @@ async function updateUserInfo(
   parent,
   { token, userInfo },
   { models, firebaseApp },
-  info
+  info,
 ) {
   try {
     const auth = await getAuth(firebaseApp).verifyIdToken(token);
