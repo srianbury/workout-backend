@@ -1,14 +1,16 @@
 import { getAuth } from "firebase-admin/auth";
 import { extractVideoInformation } from "../utils";
 
-async function createPost(parent, args, { models, firebaseApp }, info) {
+async function createPost(
+  parent,
+  args,
+  { models, firebaseApp, requestor },
+  info,
+) {
   try {
-    const { token, title, shortDescription, longDescription, videoSource } =
-      args;
-    const auth = await getAuth(firebaseApp).verifyIdToken(token);
-    const user = await models.models.User.findOne({ userId: auth.uid }).exec();
+    const { title, shortDescription, longDescription, videoSource } = args;
 
-    if (!user) {
+    if (!requestor) {
       // TODO: FINISH
       return {
         authenticationError: {
@@ -25,7 +27,7 @@ async function createPost(parent, args, { models, firebaseApp }, info) {
     }
 
     const newPost = new models.models.Post({
-      authorId: user._id,
+      authorId: requestor._id,
       title,
       shortDescription,
       longDescription,
@@ -36,7 +38,7 @@ async function createPost(parent, args, { models, firebaseApp }, info) {
     await newPost.save();
     const result = {
       ...newPost._doc,
-      user,
+      user: requestor,
     };
     return result;
   } catch (e) {
