@@ -9,7 +9,6 @@ const postSchema = gql`
 
   extend type Mutation {
     createPost(
-      token: String!
       title: String!
       shortDescription: String!
       longDescription: String!
