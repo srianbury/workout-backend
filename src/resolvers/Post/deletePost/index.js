@@ -1,23 +1,7 @@
 import { getAuth } from "firebase-admin/auth";
 
-async function deletePost(
-  parent,
-  { token, postId },
-  { models, firebaseApp },
-  info,
-) {
-  let auth;
-  try {
-    auth = await getAuth(firebaseApp).verifyIdToken(token);
-  } catch (e) {
-    throw Error("Error trying to authenticate.");
-  }
-  if (!auth) {
-    throw Error("Not authorized.");
-  }
-
-  const user = await models.models.User.findOne({ userId: auth.uid }).exec();
-  if (!user) {
+async function deletePost(parent, { postId }, { models, requestor }, info) {
+  if (!requestor) {
     throw Error("Not authorized.");
   }
 
@@ -31,7 +15,7 @@ async function deletePost(
     throw Error("Post not found.");
   }
 
-  if (!post.authorId.equals(user._id)) {
+  if (!post.authorId.equals(requestor._id)) {
     throw Error("Not authorized.");
   }
 
