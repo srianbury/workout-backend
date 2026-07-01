@@ -22,7 +22,7 @@ const postSchema = gql`
       longDescription: String
       videoSource: String
     ): Post!
-    deletePost(token: String!, postId: ID!): Boolean
+    deletePost(postId: ID!): Boolean
     favoritePost(postId: ID!, operation: String!): Boolean!
   }
 
