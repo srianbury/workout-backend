@@ -8,7 +8,7 @@ const userSchema = gql`
 
   extend type Mutation {
     authenticate(method: String!): AuthenticatedUser
-    updateUserInfo(token: String!, userInfo: UserInfo!): UpdateUserInfoResponse!
+    updateUserInfo(userInfo: UserInfo!): UpdateUserInfoResponse!
   }
 
   type User {
