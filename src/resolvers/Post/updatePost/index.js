@@ -1,30 +1,9 @@
 import { getAuth } from "firebase-admin/auth";
 import { extractVideoInformation } from "../utils";
 
-async function updatePost(parent, args, { models, firebaseApp }, info) {
-  const {
-    token,
-    postId,
-    title,
-    shortDescription,
-    longDescription,
-    videoSource,
-  } = args;
-
-  let auth;
-  try {
-    auth = await getAuth(firebaseApp).verifyIdToken(token);
-  } catch (e) {
-    throw Error("Not authorized.");
-  }
-  if (!auth) {
-    throw Error("Not authorized.");
-  }
-
-  const user = await models.models.User.findOne({ userId: auth.uid }).exec();
-  if (!user) {
-    throw Error("Not authorized.");
-  }
+async function updatePost(parent, args, { models, requestor }, info) {
+  const { postId, title, shortDescription, longDescription, videoSource } =
+    args;
 
   let post;
   try {
@@ -36,7 +15,7 @@ async function updatePost(parent, args, { models, firebaseApp }, info) {
     throw Error("Post not found.");
   }
 
-  if (!post.authorId.equals(user._id)) {
+  if (!post.authorId.equals(requestor._id)) {
     throw Error("Not authorized.");
   }
 
@@ -68,7 +47,7 @@ async function updatePost(parent, args, { models, firebaseApp }, info) {
   await post.save();
   return {
     ...post._doc,
-    user,
+    user: requestor,
   };
 }
 
