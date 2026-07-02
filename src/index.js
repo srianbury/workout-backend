@@ -32,6 +32,7 @@ const apolloServer = new ApolloServer({
     const requestor = await getRequestor(req, firebaseApp, models);
 
     return {
+      req,
       models,
       firebaseApp,
       requestor,

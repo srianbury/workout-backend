@@ -1,12 +1,14 @@
 import { getAuth } from "firebase-admin/auth";
 
-async function signUp(parent, { token }, { models, firebaseApp }, info) {
+async function signUp(
+  parent,
+  args,
+  { req, models, firebaseApp, requestor },
+  info,
+) {
   try {
     // ensure they don't already have an account
-    const auth = await getAuth(firebaseApp).verifyIdToken(token);
-    const user = await models.models.User.findOne({ userId: auth.uid }).exec();
-
-    if (user) {
+    if (requestor) {
       return {
         authenticationError: {
           type: "ACCOUNT_ALREADY_EXISTS_PLEASE_SIGN_IN",
@@ -14,6 +16,9 @@ async function signUp(parent, { token }, { models, firebaseApp }, info) {
         },
       };
     }
+
+    const token = req.headers.authorization;
+    const auth = await getAuth(firebaseApp).verifyIdToken(token);
 
     const newUser = new models.models.User({
       userId: auth.uid,
