@@ -2,21 +2,21 @@ import { getAuth } from "firebase-admin/auth";
 
 async function updateUserInfo(
   parent,
-  { token, userInfo },
-  { models, firebaseApp },
+  { userInfo },
+  { req, models, requestor },
   info,
 ) {
   try {
-    const auth = await getAuth(firebaseApp).verifyIdToken(token);
-    const user = await models.models.User.findOne({ userId: auth.uid }).exec();
-
-    if (!user) {
+    if (!requestor) {
       // TODO: add more logic here to say why it failed
       return {
         success: false,
         message: "Could not verify your account.",
       };
     }
+
+    // get a fresh copy of the user
+    const user = await models.models.User.findOne({ _id: requestor._id });
 
     if (userInfo.username) {
       user.username = userInfo.username;
@@ -26,7 +26,7 @@ async function updateUserInfo(
     return {
       success: true,
       user: {
-        accessToken: token, // we're just returning the access token b/c we're going to reauth on the client side to prevent
+        accessToken: req.headers.authorization, // we're just returning the access token b/c we're going to reauth on the client side to prevent
         // holding the user state in multiple places
       },
     };
