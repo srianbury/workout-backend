@@ -1,21 +1,15 @@
 import { getAuth } from "firebase-admin/auth";
 
-async function signIn(parent, { token }, { models, firebaseApp }, info) {
+async function signIn(parent, args, { req, requestor }, info) {
   try {
-    // TODO: change this to use requestor context instead of the token arg
-    const auth = await getAuth(firebaseApp).verifyIdToken(token);
-    const user = await models.models.User.findOne({ userId: auth.uid }).exec();
-
-    if (!user) {
+    if (!requestor || !req?.headers?.authorization) {
       throw new Error("ACCOUNT_NOT_FOUND");
     }
 
-    const result = {
-      ...user._doc,
-      token,
+    return {
+      ...requestor._doc,
+      token: req.headers.authorization,
     };
-
-    return result;
   } catch (e) {
     console.log(e);
     throw e;
