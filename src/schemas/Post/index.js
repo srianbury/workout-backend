@@ -15,7 +15,6 @@ const postSchema = gql`
       videoSource: String
     ): Post
     updatePost(
-      token: String!
       postId: ID!
       title: String
       shortDescription: String
