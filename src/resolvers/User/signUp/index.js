@@ -21,7 +21,7 @@ async function signUp(
     const auth = await getAuth(firebaseApp).verifyIdToken(token);
 
     const newUser = new models.models.User({
-      userId: auth.uid,
+      authId: auth.uid,
       username: auth.uid, // temporary
       email: auth.email,
       picture: auth.picture,
@@ -38,6 +38,7 @@ async function signUp(
       token,
     };
   } catch (e) {
+    console.log(e);
     return {
       authenticationError: {
         message: "An unexpected error occurred.",

@@ -20,7 +20,7 @@ async function getRequestor(request, firebaseApp, models) {
     let auth;
     try {
       auth = await getAuth(firebaseApp).verifyIdToken(
-        request.headers.authorization
+        request.headers.authorization,
       );
     } catch (e) {
       console.log("Token authentication failed.");
@@ -33,7 +33,7 @@ async function getRequestor(request, firebaseApp, models) {
     }
 
     const requestor = await models.models.User.findOne({
-      userId: auth.uid,
+      authId: auth.uid,
     }).exec();
     return requestor;
   } catch (e) {
