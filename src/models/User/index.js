@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    userId: {
+    authId: {
       // the uid provided by firebase auth
       type: String,
       unique: true,
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-userSchema.index({ userId: 1 }, { unique: true });
+userSchema.index({ authId: 1 }, { unique: true });
 userSchema.index({ username: 1 }, { unique: true });
 userSchema.index({ email: 1 }, { unique: true });
 
