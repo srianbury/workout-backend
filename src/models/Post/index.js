@@ -27,6 +27,8 @@ const postSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+postSchema.index({ authorId: 1 });
+
 const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
 
 export { Post };
