@@ -20,7 +20,7 @@ async function getPostByPostId(variables) {
                 }
             },
             user {
-                userId,
+                id,
                 email,
                 initials,
                 username,
@@ -44,17 +44,17 @@ async function getPosts(variables) {
           title
           shortDescription
           longDescription
-          videoSource
+          videoSource:
           createdAt
           media {
-            photo
             video {
               source
               id
             }
+            photo
           }
           user {
-            userId
+            id
             email
             initials
             username

@@ -20,6 +20,12 @@ backend service for [https://platphorm.vercel.app/](https://platphorm.vercel.app
 
 1. `docker compose -f docker-compose-backend-prod.yml up --build`
 
+### Run tests
+
+```bash
+yarn test
+```
+
 ### Getting development data
 
 1. export from prod
