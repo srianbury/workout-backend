@@ -7,12 +7,11 @@ describe("users", () => {
       const expectedResult = {
         data: {
           getUserByUsername: {
-            userId: "PCXwV8I0kUS7nqWNuivVybAcaHN2",
-            email: "bsunbury29@gmail.com",
-            initials: "b",
+            id: "630d68d435f47dfc068f1343",
             username: "brian",
-            picture:
-              "https://yt3.googleusercontent.com/ytc/AL5GRJUHsXC3Id7gSqICSMSXP83FGp_G8uD1rAn2rm1tpg=s176-c-k-c0x00ffffff-no-rj",
+            initials: "b",
+            email: "bsunbury29@gmail.com",
+            picture: "https://graph.facebook.com/2119280251792980/picture",
           },
         },
       };

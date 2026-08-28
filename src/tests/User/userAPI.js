@@ -4,9 +4,9 @@ import { TEST_API_URL } from "..";
 async function user(variables) {
   return axios.post(TEST_API_URL, {
     query: `
-    query($username: String!) {
+     query($username: String!) {
         getUserByUsername(username: $username) {
-          userId
+          id
           username
           initials
           email
