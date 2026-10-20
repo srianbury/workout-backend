@@ -1,6 +1,7 @@
 import { User } from "./User";
 import { Post } from "./Post";
 import { Likes } from "./Likes";
+import { Follows } from "./Follows";
 
 let mockUsers = [
   {
@@ -86,6 +87,7 @@ const models = {
   User,
   Post,
   Likes,
+  Follows,
 };
 
 export { mockUsers, mockPosts, mockUsersDict, models };
