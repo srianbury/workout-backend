@@ -9,6 +9,8 @@ const userSchema = gql`
   extend type Mutation {
     authenticate(method: String!): AuthenticatedUser
     updateUserInfo(userInfo: UserInfo!): UpdateUserInfoResponse!
+    followUser(username: String!): Boolean!
+    unfollowUser(username: String!): Boolean!
   }
 
   type User {
@@ -17,6 +19,7 @@ const userSchema = gql`
     initials: String!
     username: String!
     picture: String
+    following: Boolean!
   }
 
   type AuthenticatedUser {
